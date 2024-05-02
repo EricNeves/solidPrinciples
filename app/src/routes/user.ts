@@ -1,9 +1,11 @@
-import { Router } from 'express'
+import { Router } from "express";
 
-const router = Router()
+import { CreateUserFactory } from "../useCases/users/createUser/CreateUserFacotry";
 
-router.post('/save', (req, res) => {
+const router = Router();
 
-})
+const createUserController = CreateUserFactory.generateInstance();
 
-export default router
+router.post("/create", createUserController.handle.bind(createUserController));
+
+export default router;
