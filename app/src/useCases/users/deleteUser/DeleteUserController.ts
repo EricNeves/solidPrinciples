@@ -14,6 +14,12 @@ export class DeleteUserController {
         msg: user,
       });
     } catch (error: any) {
+      if (error.code === "P2025") {
+        return response.status(400).json({
+          message: "Sorry, user not found.",
+        });
+      }
+
       return response.status(400).json({
         message: error.message || "Sorry, unexpected error.",
       });
