@@ -59,4 +59,22 @@ export class PostgresUserRepository implements IUserRepository {
 
     return userFromDB;
   }
+
+  async update(user: Partial<User>): Promise<Partial<User>> {
+    const userFromDB = await this.prisma.users.update({
+      data: {
+        name: user.name,
+      },
+      where: {
+        email: user.email,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+
+    return userFromDB
+  }
 }
