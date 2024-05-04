@@ -75,6 +75,21 @@ export class PostgresUserRepository implements IUserRepository {
       },
     });
 
-    return userFromDB
+    return userFromDB;
+  }
+
+  async remove(user: Partial<User>): Promise<Partial<User>> {
+    const userFromDB = await this.prisma.users.delete({
+      where: {
+        email: user.email,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+
+    return userFromDB;
   }
 }

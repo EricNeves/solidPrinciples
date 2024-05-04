@@ -5,4 +5,5 @@ export interface IUserRepository {
   authenticate(user: Partial<User>): Promise<Partial<User> | boolean>;
   find(user: Partial<User>): Promise<Partial<User | null>>;
   update(user: Partial<User>): Promise<Partial<User>>;
+  remove(user: Partial<User>): Promise<Partial<User>>;
 }
