@@ -19,6 +19,10 @@ export class JwtHelper {
   }
 
   verify(token: string): any {
-    return this.jwt.verify(token, this.secret_key)
+    try {
+      return this.jwt.verify(token, this.secret_key)
+    } catch (error: any) {
+      return false;
+    }
   }
 }

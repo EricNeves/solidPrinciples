@@ -13,7 +13,7 @@ export class Jwt implements IJwt {
     return this.jwtHelper.generate(data);
   }
 
-  verify(token: string): User {
+  verify(token: string): Partial<User>|boolean {
     return this.jwtHelper.verify(token);
   }
 }
