@@ -6,7 +6,7 @@ export class DeleteUserUseCase implements IDeleteUserUseCase {
   constructor(private userRepository: IUserRepository) {}
 
   async execute(data: DeleteUserDTO): Promise<string> {
-    const user = await this.userRepository.remove(data);
+    await this.userRepository.remove(data);
 
     return "User deleted successfully.";
   }
