@@ -8,10 +8,6 @@ export class DeleteUserUseCase implements IDeleteUserUseCase {
   async execute(data: DeleteUserDTO): Promise<string> {
     const user = await this.userRepository.remove(data);
 
-    if (!user) {
-      throw new Error("Sorry, something went wrong.");
-    }
-
     return "User deleted successfully.";
   }
 }

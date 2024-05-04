@@ -8,10 +8,6 @@ export class EditUserUseCase implements IEditUserUseCase {
   async execute(data: EditUserDTO): Promise<Partial<User>> {
     const user = await this.userRepository.update(data);
 
-    if (!user) {
-      throw new Error("Sorry, something went wrong.");
-    }
-
     return user;
   }
 }
