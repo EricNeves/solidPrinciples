@@ -10,7 +10,8 @@ import Joi from "joi";
 export class CreateUserFactory {
   static generateInstance() {
     const postgresUserRepository = new PostgresUserRepository(
-      new PrismaClient()
+      new PrismaClient(),
+      new Bcrypt(bcrypt)
     );
 
     const userSchema = Joi.object({
