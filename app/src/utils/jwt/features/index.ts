@@ -22,7 +22,7 @@ export class JwtHelper {
     try {
       return this.jwt.verify(token, this.secret_key)
     } catch (error: any) {
-      return false;
+      return null;
     }
   }
 }

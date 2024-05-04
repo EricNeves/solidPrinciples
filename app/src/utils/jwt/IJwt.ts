@@ -2,5 +2,5 @@ import { User } from "../../entities/User";
 
 export interface IJwt {
   generate(data: Partial<User> | boolean): string;
-  verify(token: string): Partial<User> | boolean;
+  verify(token: string): Partial<User> | null;
 }
