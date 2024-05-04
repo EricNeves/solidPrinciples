@@ -44,4 +44,19 @@ export class PostgresUserRepository implements IUserRepository {
       email: userExists.email,
     };
   }
+
+  async find(user: Partial<User>): Promise<Partial<User | null>> {
+    const userFromDB = await this.prisma.users.findUnique({
+      where: {
+        email: user.email,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+
+    return userFromDB;
+  }
 }
