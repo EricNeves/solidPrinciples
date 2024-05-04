@@ -5,7 +5,7 @@ import { IAuthUserUseCase } from "./IAuthUserUseCase";
 export class AuthUserUseCase implements IAuthUserUseCase {
   constructor(private userRepository: IUserRepository, private jwt: IJwt) {}
 
-  async execute(data: AuthUserDTO): Promise<any> {
+  async execute(data: AuthUserDTO): Promise<string> {
     const user = await this.userRepository.authenticate(data);
 
     if (!user) {
