@@ -13,6 +13,6 @@ RUN pnpm install
 
 RUN pnpm run build
 
-EXPOSE 3333
+EXPOSE 3030
 
 CMD ["pnpm", "start"]
