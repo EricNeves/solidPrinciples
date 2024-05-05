@@ -6,7 +6,7 @@ import Joi from "joi";
 export class Validator implements IValidator {
   constructor(private joi: Joi.ObjectSchema<any>) {}
 
-  validate(user: User): any {
+  validate(user: Partial<User>): any {
     const { error } = this.joi.validate(user);
 
     if (error) {
