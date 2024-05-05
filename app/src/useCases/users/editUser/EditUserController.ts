@@ -9,27 +9,15 @@ export class EditUserController {
   ) {}
 
   async handle(request: Request, response: Response): Promise<Response> {
-    try {
-      this.validator.validate(request.body);
+    this.validator.validate(request.body);
 
-      const user = await this.editUserUseCase.execute({
-        name: request.body.name,
-        email: request.customer?.email ?? "",
-      });
+    const user = await this.editUserUseCase.execute({
+      name: request.body.name,
+      email: request.customer?.email ?? "",
+    });
 
-      return response.status(200).json({
-        user,
-      });
-    } catch (error: any) {
-      if (error.code === "P2025") {
-        return response.status(400).json({
-          message: "Sorry, user not found.",
-        });
-      }
-
-      return response.status(400).json({
-        message: error.message || "Sorry, unexpected error.",
-      });
-    }
+    return response.status(200).json({
+      user,
+    });
   }
 }

@@ -9,18 +9,12 @@ export class AuthUserController {
   ) {}
 
   async handle(request: Request, response: Response): Promise<Response> {
-    try {
-      this.validator.validate(request.body);
+    this.validator.validate(request.body);
 
-      const auth = await this.authUserUseCase.execute(request.body);
+    const auth = await this.authUserUseCase.execute(request.body);
 
-      return response.status(200).json({
-        jwt: auth
-      });
-    } catch (error: any) {
-      return response.status(400).json({
-        message: error.message || "Sorry, unexpected error.",
-      });
-    }
+    return response.status(200).json({
+      jwt: auth,
+    });
   }
 }
