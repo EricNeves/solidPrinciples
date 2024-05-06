@@ -5,6 +5,6 @@ services:
       context: ./
       dockerfile: Dockerfile
       args:
-        - env=production
+        - env=development
     ports:
       - "3030:3030"

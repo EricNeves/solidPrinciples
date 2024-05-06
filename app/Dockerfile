@@ -2,6 +2,8 @@ FROM node:20
 
 WORKDIR /app
 
+ARG env=development
+
 RUN npm install -g pnpm
 
 COPY package.json ./
@@ -11,6 +13,12 @@ COPY . .
 
 RUN pnpm install
 
+RUN if [ "$env" -eq "development" ]; then\
+        npx prisma migrate dev; \
+    else \
+        npx prisma migrate deploy; \
+    fi
+ 
 RUN pnpm run build
 
 EXPOSE 3030
