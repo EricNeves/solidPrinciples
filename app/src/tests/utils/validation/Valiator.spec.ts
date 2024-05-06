@@ -1,8 +1,8 @@
 import { Validator } from '../../../utils/validation/features/Validator'
 import Joi from "joi";
 
-describe('utils', () => {
-  it('should throws Error if name not exists', () => {
+describe('utils/validation', () => {
+  it('should throws Error if name does not exists', () => {
     try {
       const userSchema = Joi.object({
         name: Joi.string().required()
