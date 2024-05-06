@@ -13,12 +13,14 @@ COPY . .
 
 RUN pnpm install
 
-RUN if [ "$env" = "development" ]; then\
-        npx prisma migrate dev; \
-    else \
-        npx prisma migrate deploy; \
-    fi
- 
+# RUN if [ "$env" = "development" ]; then\
+#         npx prisma migrate dev; \
+#     else \
+#         npx prisma migrate deploy; \
+#     fi
+
+RUN npx prisma migrate deploy
+
 RUN pnpm run build
 
 EXPOSE 3030
