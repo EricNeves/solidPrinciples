@@ -9,6 +9,7 @@ import swaggerSchema from "./swagger.json";
 const app: Express = express();
 
 import userRouter from "./routes/user";
+import homeRouter from "./routes/home";
 
 const PORT = process.env.PORT || 3030;
 
@@ -18,6 +19,7 @@ app.use(
   })
 );
 app.use(express.json());
+app.use('/', homeRouter)
 app.use("/doc", serve, setup(swaggerSchema));
 app.use("/users", userRouter);
 app.use(handleError);
