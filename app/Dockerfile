@@ -11,16 +11,8 @@ COPY pnpm-lock.yaml ./
 
 COPY . .
 
-RUN pnpm install
-
-RUN sh -c 'if [ "$env" = "development" ]; then \
-        npx prisma migrate dev; \
-    else \
-        npx prisma migrate deploy; \
-    fi'
+EXPOSE 3030
 
 RUN pnpm run build
 
-EXPOSE 3030
-
-CMD ["pnpm", "start"]
+CMD ["sh", "start.sh"]
