@@ -13,6 +13,4 @@ COPY . .
 
 EXPOSE 3030
 
-RUN pnpm run build
-
-CMD ["sh", "start.sh"]
+CMD ["bash", "start.sh"]
