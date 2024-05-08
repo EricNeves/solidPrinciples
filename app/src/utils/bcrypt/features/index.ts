@@ -7,12 +7,12 @@ export class BCryptHelper {
     this.bcryptDep = bcrypt;
   }
 
-  async encrypt(password: string) {
+  async hashPassword(password: string): Promise<string> {
     const passwordEncrypted = await this.bcryptDep.hash(password, 10);
     return passwordEncrypted;
   }
 
-  async compare(password: string, encrypted: string): Promise<boolean> {
+  async comparePassword(password: string, encrypted: string): Promise<boolean> {
     const matchPassword = await this.bcryptDep.compare(password, encrypted)
   
     if (!matchPassword) {
