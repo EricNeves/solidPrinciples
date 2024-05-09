@@ -1,13 +1,21 @@
 import { Jwt } from "../../../utils/jwt/features/Jwt";
+import { MockProxy, mock } from "jest-mock-extended";
 import { IJwt } from "../../../utils/jwt/IJwt";
 
 process.env.JWT_SECRET_KEY = "admin";
 
 describe("utils/jwt", () => {
+  let jwtHelper: MockProxy<IJwt>;
+
+  beforeEach(() => {
+    jwtHelper = mock<IJwt>({
+      generate: jest.fn(),
+      verify: jest.fn(),
+    });
+  });
+
   it("should generate token jwt", () => {
-    const jwtHelper: Partial<IJwt> = {
-      generate: jest.fn().mockResolvedValue("hash"),
-    };
+    (jwtHelper.generate as jest.Mock).mockResolvedValue("hash");
 
     const jwt = new Jwt(jwtHelper as IJwt);
 
@@ -17,9 +25,7 @@ describe("utils/jwt", () => {
   });
 
   it("should return a empty string", () => {
-    const jwtHelper: Partial<IJwt> = {
-      generate: jest.fn().mockResolvedValue(""),
-    };
+    (jwtHelper.generate as jest.Mock).mockResolvedValue("");
 
     const jwt = new Jwt(jwtHelper as IJwt);
 
@@ -29,10 +35,12 @@ describe("utils/jwt", () => {
   });
 
   it("should verify token and return user data", () => {
-    const jwtHelper: IJwt = {
-      generate: jest.fn().mockReturnValue("hash"),
-      verify: jest.fn().mockReturnValue({ id: 1, name: "John Joe" }),
-    };
+    (jwtHelper.generate as jest.Mock).mockReturnValue("hash");
+
+    (jwtHelper.verify as jest.Mock).mockReturnValue({
+      id: 1,
+      name: "John Joe",
+    });
 
     const jwt = new Jwt(jwtHelper);
 
@@ -45,10 +53,9 @@ describe("utils/jwt", () => {
   });
 
   it("should return null if token is not valid", () => {
-    const jwtHelper: IJwt = {
-      generate: jest.fn().mockReturnValue("hash"),
-      verify: jest.fn().mockReturnValue(null),
-    };
+    (jwtHelper.generate as jest.Mock).mockReturnValue("hash");
+
+    (jwtHelper.verify as jest.Mock).mockReturnValue(null);
 
     const jwt = new Jwt(jwtHelper);
 

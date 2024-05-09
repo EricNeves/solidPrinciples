@@ -1,6 +1,5 @@
 import { AuthUserUseCase } from "../../../../useCases/users/authUser/AuthUserUseCase";
 import { IUserRepository } from "../../../../repositories/IUserRepository";
-import { Jwt } from "../../../../utils/jwt/features/Jwt";
 import { mock, MockProxy } from "jest-mock-extended";
 import { IJwt } from "../../../../utils/jwt/IJwt";
 import { User } from "../../../../entities/User";
