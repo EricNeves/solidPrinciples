@@ -1,6 +1,5 @@
 import { AuthUserUseCase } from "../../../../useCases/users/authUser/AuthUserUseCase";
 import { IUserRepository } from "../../../../repositories/IUserRepository";
-import { Jwt } from "../../../../utils/jwt/features/Jwt";
 import { mock, MockProxy } from "jest-mock-extended";
 import { IJwt } from "../../../../utils/jwt/IJwt";
 import { User } from "../../../../entities/User";
@@ -9,14 +8,14 @@ process.env.JWT_SECRET_KEY = "admin";
 
 describe("useCases/users", () => {
   let userRepository: MockProxy<IUserRepository>;
-  let jwtHelper: MockProxy<IJwt>;
+  let jwt: MockProxy<IJwt>;
 
   beforeEach(() => {
     userRepository = mock<IUserRepository>({
       authenticate: jest.fn(),
     });
 
-    jwtHelper = mock<IJwt>({
+    jwt = mock<IJwt>({
       generate: jest.fn(),
       verify: jest.fn(),
     });
@@ -29,11 +28,11 @@ describe("useCases/users", () => {
       }
     );
 
-    (jwtHelper.generate as jest.Mock).mockResolvedValue("token");
+    (jwt.generate as jest.Mock).mockResolvedValue("token");
 
     const authUserUseCase = new AuthUserUseCase(
       userRepository as IUserRepository,
-      new Jwt(jwtHelper as IJwt)
+      jwt
     );
 
     const auth = await authUserUseCase.execute({
@@ -48,11 +47,11 @@ describe("useCases/users", () => {
     try {
       (userRepository.authenticate as jest.Mock).mockResolvedValue(null);
 
-      (jwtHelper.generate as jest.Mock).mockResolvedValue("token");
+      (jwt.generate as jest.Mock).mockResolvedValue("token");
 
       const auth = new AuthUserUseCase(
         userRepository as IUserRepository,
-        new Jwt(jwtHelper as IJwt)
+        jwt
       );
 
       await auth.execute({
