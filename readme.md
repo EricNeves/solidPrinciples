@@ -24,7 +24,7 @@
 <img src=".doc/screenshotA.png">
 <img src=".doc/screenshotB.png">
 
-#### Intro
+#### Intro 📜
 
 Este projeto tem como foco a implementação dos princípios **SOLID**, nos quais visam trazer para a aplicação mais **flexibilidade**, **escalabilidade** e **fácil manutenção**.
 
@@ -42,7 +42,9 @@ Esses padrões facilitam o processo de desenvolvimento de software ao permitir o
 
 Além do mais, foi implementado o padrão arquitetural **package-by-feature**, diferentemente do **package-by-layer** como na **arquitetura em camadas**, esse padrão foca em organizar código em torno de funcionalidades específicas e centradas no domínio. Todos os componentes de uma funcionalidade são organizados juntos (**controllers**, **useCases**, **DTO**, **Factory** e etc...), o que facilita a compreensão e manutenção, além de outros recursos.
 
-#### Features
+O projeto faz a utilização de `testes unitários` com jest, apesar dos testes serem efetuados em apenas alguns pontos do domínio o app está todo adptado para ser testado.
+
+#### Features 💡
 
 - 📁 Padrão Package By Feature
 - ✅ Criar usuário
@@ -51,5 +53,82 @@ Além do mais, foi implementado o padrão arquitetural **package-by-feature**, d
 - 🖊️ Editar Usuário
 - 🧹 Deletar Usuário
 - ⚡ Dependencies:
-  
-  
+  - typescript: `^5.4.5`
+  - jest: `^29.7.0`
+  - prisma: `^5.13.0`
+  - @prisma/client: `^5.13.0`
+  - bcrypt: `^5.1.1`
+  - cors: `^2.8.5`
+  - express: `^4.19.2`
+  - express-async-errors: `^3.1.1`
+  - joi: `^17.13.0`
+  - jsonwebtoken: `^9.0.2`
+  - swagger-ui-express: `5.0.0`
+  - and more...
+
+#### Execution ⚙️
+
+>
+> [!NOTE]
+> Siga os passos abaixo para a execução do projeto.
+
+O primeiro passo, é nomear o arquivo `.env.example` para `.env`.
+
+```sh 
+
+# Install Deps
+$ cd app && pnpm install
+
+# Tests
+$ pnpm test
+$ pnpm test:coverage
+
+# Docker
+$ docker-compose -f "docker-compose-dev.yml" up -d --build
+
+```
+
+#### Alive 🔋
+
+Após o processo de instalação o serviço estará disponível na porta `3030`. 
+Acessando o endpoint `127.0.0.1:3030/doc`, terá a documentação para o uso da `api`.
+
+Em produção, o projeto está hospedado no serviço gratuito da empresa [Render](https://render.com/), rodando todo o app em `docker`.
+
+>
+> [!NOTE]
+> Por ser um serviço gratuito, leva alguns segundos ou minutos para abrir a conexão, após isso, poderá usar o serviço normalmente.
+> 
+
+Link: ([SOLID Principles API](https://solidprinciples-api.onrender.com))
+
+#### Author 🦆
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://www.instagram.com/ericneves_dev/">
+        <img src="https://avatars.githubusercontent.com/u/32256029" width="100px;" alt=""/>
+        <br />
+        <sub>
+          <b>Eric Neves</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://www.instagram.com/ericneves_dev/">
+        <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" width="100%">
+      </a> 
+      <br />
+      <a href="https://linkedin.com/in/ericnevesrr"> 
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100%">
+      </a>
+    </td>
+  </tr>
+</table>
+
+#### License 📋
+
+<img src="https://img.shields.io/github/license/ericneves/solidprinciples?style=flat-square&logo=git&color=%23F05032">
