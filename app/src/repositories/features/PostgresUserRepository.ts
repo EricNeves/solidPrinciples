@@ -18,7 +18,7 @@ export class PostgresUserRepository implements IUserRepository {
     });
   }
 
-  async authenticate(user: User): Promise<Partial<User> | boolean> {
+  async authenticate(user: Partial<User>): Promise<Partial<User> | boolean> {
     const userExists = await this.prisma.users.findUnique({
       where: {
         email: user.email,
@@ -30,7 +30,7 @@ export class PostgresUserRepository implements IUserRepository {
     }
 
     const matchPassword = await this.bcrypt.comparePassword(
-      user.password,
+      user.password ?? '',
       userExists.password
     );
 

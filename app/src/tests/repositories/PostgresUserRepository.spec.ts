@@ -18,6 +18,9 @@ describe("repositories/PostgresUserRepository", () => {
     prismaClient = mock<PrismaClient>({
       users: {
         create: jest.fn(),
+        findUnique: jest.fn(),
+        update: jest.fn(),
+        delete: jest.fn(),
       },
     });
 
@@ -34,14 +37,106 @@ describe("repositories/PostgresUserRepository", () => {
       Promise.resolve("encrypted")
     );
 
-    const user = new PostgresUserRepository(prismaClient, bcrypt);
+    const userRepository = new PostgresUserRepository(prismaClient, bcrypt);
 
-    await user.save(userData);
+    await userRepository.save(userData);
 
-    await expect(user.save(userData)).resolves.toBeUndefined();
+    await expect(userRepository.save(userData)).resolves.toBeUndefined();
 
     expect(prismaClient.users.create).toHaveBeenCalledWith({
       data: userData,
     });
+  });
+
+  it("should authenticate user", async () => {
+    (prismaClient.users.findUnique as jest.Mock).mockReturnValue({
+      id: 1,
+      ...userData,
+    });
+
+    (bcrypt.comparePassword as jest.Mock).mockReturnValue(true);
+
+    const userRepository = new PostgresUserRepository(prismaClient, bcrypt);
+
+    const user = await userRepository.authenticate({
+      email: "john@test.com",
+      password: "123",
+    });
+
+    expect(user).toHaveProperty("id", 1);
+  });
+
+  it("should return false if user does not exists", async () => {
+    (prismaClient.users.findUnique as jest.Mock).mockReturnValue(null);
+
+    (bcrypt.comparePassword as jest.Mock).mockReturnValue(true);
+
+    const userRepository = new PostgresUserRepository(prismaClient, bcrypt);
+
+    const user = await userRepository.authenticate({
+      email: "john@test.com",
+      password: "123",
+    });
+
+    expect(user).toBeFalsy();
+  });
+
+  it("should return false if password does not match", async () => {
+    (prismaClient.users.findUnique as jest.Mock).mockReturnValue(userData);
+
+    (bcrypt.comparePassword as jest.Mock).mockReturnValue(false);
+
+    const userRepository = new PostgresUserRepository(prismaClient, bcrypt);
+
+    const user = await userRepository.authenticate({
+      email: "john@test.com",
+      password: "123",
+    });
+
+    expect(user).toBeFalsy();
+  });
+
+  it("should return false if password is empty", async () => {    
+    (prismaClient.users.findUnique as jest.Mock).mockReturnValue({ id: 1, ...userData });
+
+    (bcrypt.comparePassword as jest.Mock).mockReturnValue(false);
+
+    const userRepository = new PostgresUserRepository(prismaClient, bcrypt);
+
+    const user = await userRepository.authenticate({
+      email: "john@test.com"
+    });
+
+    expect(user).toBeFalsy();
+  });
+
+  it("should return data if user exists", async () => {
+    (prismaClient.users.findUnique as jest.Mock).mockReturnValue(userData);
+
+    const userRepository = new PostgresUserRepository(prismaClient, bcrypt);
+
+    const user = await userRepository.find({ email: "john@test.com" });
+
+    expect(user).toHaveProperty("email", "john@test.com");
+  });
+
+  it("should return data if the user was updated", async () => {
+    (prismaClient.users.update as jest.Mock).mockReturnValue(userData);
+
+    const userRepository = new PostgresUserRepository(prismaClient, bcrypt);
+
+    const user = await userRepository.update({ email: "john@test.com" });
+
+    expect(user).toHaveProperty("email", "john@test.com");
+  });
+
+  it("should return data if the user was deleted", async () => {
+    (prismaClient.users.delete as jest.Mock).mockReturnValue(userData);
+
+    const userRepository = new PostgresUserRepository(prismaClient, bcrypt);
+
+    const user = await userRepository.remove({ email: "john@test.com" });
+
+    expect(user).toHaveProperty("email", "john@test.com");
   });
 });
