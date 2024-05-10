@@ -79,12 +79,12 @@ O primeiro passo, é nomear o arquivo `.env.example` para `.env`.
 # Install Deps
 $ cd app && pnpm install
 
+# Docker
+$ docker-compose -f "docker-compose-dev.yml" up -d --build
+
 # Tests
 $ pnpm test
 $ pnpm test:coverage
-
-# Docker
-$ docker-compose -f "docker-compose-dev.yml" up -d --build
 
 ```
 
