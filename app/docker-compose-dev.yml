@@ -5,8 +5,8 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-      args:
-        - env=development
+    environment:
+      - env=environment
     ports:
       - "3030:3030"
   database:
