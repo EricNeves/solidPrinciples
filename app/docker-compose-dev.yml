@@ -1,6 +1,7 @@
 version: '3'
 services:
   api:
+    container_name: sp_api
     build:
       context: ./
       dockerfile: Dockerfile
@@ -8,3 +9,18 @@ services:
         - env=development
     ports:
       - "3030:3030"
+  database:
+    container_name: sp_db
+    image: postgres:15.4
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: solid
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
